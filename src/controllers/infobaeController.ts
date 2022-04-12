@@ -22,7 +22,7 @@ class InfobaeController {
       const dataParsed = allData.slice(0, size);
       return res.json(size === undefined || null ? allData[0] : dataParsed);
     } catch (error: any) {
-      res.json(boom.badImplementation(error));
+      return res.json(boom.badImplementation(error));
     }
   }
 }
