@@ -1,7 +1,7 @@
 {
   "name": "infobae-economia-bot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "author": "jd-apprentice <emeraldusk@gmail.com>",
   "license": "MIT",
   "scripts": {
