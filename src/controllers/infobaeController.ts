@@ -9,10 +9,10 @@ class InfobaeController {
    * @returns {Array} res - Array of objects with the values of infobae
    */
 
-  async getPost(req: Request, res: Response) {
+  async getPosts(req: Request, res: Response): Promise<any> {
     try {
-      const { size } = req.query;
-      const data = await infobaeService.servicePosts();
+      const { size, topic } = req.query;
+      const data = await infobaeService.servicePosts(topic?.toString()!);
       const allData = data.urlset.url.map((item: any) => {
         return {
           lastmod: item.lastmod._text,

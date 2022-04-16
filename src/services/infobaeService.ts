@@ -1,16 +1,15 @@
 import convert from "xml-js";
 import axios from "axios";
+import selectService from "../utils/index";
 
 class InfobaeService {
-  public url: string = "https://www.infobae.com/feeds/sitemap/sites/economia/";
-
   /**
    * @description Get all posts from infobae
    * @returns {Array} Response - Json with all posts
    */
-  async servicePosts() {
+  async servicePosts(topic: string) {
     try {
-      const dataInfobae = await axios.get(this.url);
+      const dataInfobae = await axios.get(selectService(topic)!);
       const json = convert.xml2json(dataInfobae.data, {
         compact: true,
         ignoreComment: true,
@@ -22,7 +21,7 @@ class InfobaeService {
       const jsonParsed = JSON.parse(json);
       return jsonParsed;
     } catch (e) {
-      console.log(e);
+      return console.log(e);
     }
   }
 }
