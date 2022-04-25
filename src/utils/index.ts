@@ -5,7 +5,7 @@ const mundo = "https://www.infobae.com/feeds/sitemap/sites/america/mundo/";
 const politica = "https://www.infobae.com/feeds/sitemap/sites/politica/";
 const init = "https://www.infobae.com/sitemap.xml";
 
-function selectService(topic: string) {
+function selectService(topic: string): string {
   switch (topic) {
     case "economia":
       return economia;

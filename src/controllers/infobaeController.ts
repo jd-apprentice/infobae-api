@@ -1,19 +1,23 @@
 import { Request, Response } from "express";
 import infobaeService from "../services/infobaeService";
 import boom from "@hapi/boom";
-
+import { DataParse, ParsedQs, SizeProps } from "../models/types";
 class InfobaeController {
   /**
    * @description Get a post from infobae
    * @param {size} req - Number of posts to return
-   * @returns {Array} res - Array of objects with the values of infobae
+   * @returns {DataParse} res - Data of the post
    */
 
-  async getPosts(req: Request, res: Response): Promise<any> {
+  async getPosts(
+    req: Request<ParsedQs, SizeProps>,
+    res: Response
+  ): Promise<Response> {
     try {
-      const { size, topic } = req.query;
+      const { topic }: ParsedQs = req.query;
+      const { size } = req.query as unknown as SizeProps;
       const data = await infobaeService.servicePosts(topic?.toString()!);
-      const allData = data.urlset.url.map((item: any) => {
+      const allData = data.urlset.url.map((item: DataParse) => {
         return {
           lastmod: item.lastmod._text,
           link: item.loc._text,
