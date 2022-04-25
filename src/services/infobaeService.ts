@@ -1,13 +1,14 @@
 import convert from "xml-js";
 import axios from "axios";
 import selectService from "../utils/index";
+import { JsonParsedProps } from "src/models/types";
 
 class InfobaeService {
   /**
    * @description Get all posts from infobae
    * @returns {Array} Response - Json with all posts
    */
-  async servicePosts(topic: string) {
+  async servicePosts(topic: string): Promise<JsonParsedProps> {
     try {
       const dataInfobae = await axios.get(selectService(topic)!);
       const json = convert.xml2json(dataInfobae.data, {
@@ -18,10 +19,10 @@ class InfobaeService {
         ignoreInstruction: true,
         ignoreAttributes: true,
       });
-      const jsonParsed = JSON.parse(json);
+      const jsonParsed: JsonParsedProps = JSON.parse(json);
       return jsonParsed;
-    } catch (e) {
-      return console.log(e);
+    } catch (error: any) {
+      throw new Error(error);
     }
   }
 }
