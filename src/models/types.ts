@@ -52,5 +52,8 @@ interface SizeProps {
 }
 
 type ParsedQs = import("qs").ParsedQs;
+type ObjectUrls = {
+  [key: string]: string;
+};
 
-export { DataParse, JsonParsedProps, ParsedQs, SizeProps };
+export { DataParse, JsonParsedProps, ParsedQs, SizeProps, ObjectUrls };
