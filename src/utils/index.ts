@@ -13,8 +13,5 @@ const URL: ObjectUrls = {
   init: "https://www.infobae.com/sitemap.xml",
 };
 
-function selectService(topic: string): string {
-  return Object.keys(URL).includes(topic) ? URL[topic] : URL.init;
-}
-
+const selectService = (topic: string): string => URL[topic] || URL.init;
 export default selectService;
