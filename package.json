@@ -5,7 +5,8 @@
   "author": "jd-apprentice <emeraldusk@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn install && tsc",
+    "render-deploy": "yarn install && tsc",
+    "build": "tsc",
     "dev": "nodemon src/index.ts",
     "start": "node ."
   },
