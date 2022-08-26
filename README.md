@@ -10,7 +10,7 @@
 
 ## Puedo probar la API?
 
-- Si! esta alojada en heroku -> [Aca](https://infobae-api.herokuapp.com/api/infobae/economia)
+- Si! esta alojada en render -> [Aca](https://infobae-api.onrender.com/)
 
 ## 🚧 Rutas
 
@@ -24,4 +24,4 @@
 - Nodejs
 - Express
 - Axios
-- Heroku
+- Render
