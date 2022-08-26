@@ -1,7 +1,7 @@
 import convert from "xml-js";
 import axios from "axios";
 import selectService from "../utils/index";
-import { JsonParsedProps } from "src/models/types";
+import { JsonParsedProps } from "../models/types";
 
 class InfobaeService {
   /**
