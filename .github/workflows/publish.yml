@@ -5,6 +5,10 @@ on:
       workflows: ["test, analyze and publish"]
       types:
         - completed
+  
+env:
+  APP_NAME: infobae_api
+  APP_VERSION: latest
 
 jobs:
   build:
@@ -21,14 +25,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-        with:
-            platforms: linux/amd64,linux/arm64
+        uses: docker/setup-buildx-action@v3
 
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
-          context: .
-          file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/infobae_api:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:${{ env.APP_VERSION }}
+          platforms: linux/amd64,linux/arm64
