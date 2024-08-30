@@ -47,8 +47,9 @@ interface JsonParsedProps {
   };
 }
 
-interface SizeProps {
+interface postQuery {
   size: number;
+  topic: string;
 }
 
 type ParsedQs = import("qs").ParsedQs;
@@ -56,4 +57,4 @@ type ObjectUrls = {
   [key: string]: string;
 };
 
-export { DataParse, JsonParsedProps, ParsedQs, SizeProps, ObjectUrls };
+export { DataParse, JsonParsedProps, ParsedQs, postQuery, ObjectUrls };
