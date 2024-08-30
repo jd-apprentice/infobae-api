@@ -6,7 +6,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "bun build src/index.ts --compise --outfile dist/index.js",
+    "build": "bun build src/index.ts --target=node --outfile dist/index.js",
     "dev": "bun --env-file=.env --watch src/index.ts",
     "start": "bun run dist/index.js",
     "test": "bun test --coverage",
