@@ -1,0 +1,5 @@
+*.config.js
+LICENSE
+.env.example
+.husky
+__tests__
