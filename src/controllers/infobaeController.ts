@@ -1,22 +1,22 @@
 import { Request, Response } from "express";
-import infobaeService from "../services/infobaeService";
 import boom from "@hapi/boom";
-import { DataParse, ParsedQs, SizeProps } from "../models/types";
+
+import { DataParse, postQuery } from "@types";
+import infobaeService from "../services/infobaeService";
+
 class InfobaeController {
   /**
    * @description Get a post from infobae
    * @param {size} req - Number of posts to return
    * @returns {DataParse} res - Data of the post
    */
-
   async getPosts(
-    req: Request<ParsedQs, SizeProps>,
+    req: Request<postQuery>,
     res: Response
   ): Promise<Response> {
     try {
-      const { topic }: ParsedQs = req.query;
-      const { size } = req.query as unknown as SizeProps;
-      const data = await infobaeService.servicePosts(topic?.toString()!);
+      const { size, topic } = req.query as unknown as postQuery;
+      const data = await infobaeService.servicePosts(topic);
       const allData = data.urlset.url.map((item: DataParse) => {
         return {
           lastmod: item.lastmod._text,
@@ -24,7 +24,8 @@ class InfobaeController {
         };
       });
       const dataParsed = allData.slice(0, size);
-      return res.json(size === undefined || null ? allData[0] : dataParsed);
+      const dataFirst = allData[0];
+      return res.json(size === undefined || null ? dataFirst : dataParsed);
     } catch (error: any) {
       return res.json(boom.badImplementation(error));
     }
