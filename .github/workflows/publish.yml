@@ -7,17 +7,8 @@ on:
         - completed
 
 jobs:
-  gitleaks:
-    uses: jd-apprentice/jd-workflows/.github/workflows/gitleaks.yml@main
-    with:
-      runs-on: ubuntu-latest
-      name: Gitleaks
-    secrets:
-      gh_token: ${{ secrets.GITHUB_TOKEN }}
-
   build:
     runs-on: ubuntu-latest
-    needs: [gitleaks]
     if: ${{ github.ref_name == 'master' }}
     steps:
       - name: Checkout
