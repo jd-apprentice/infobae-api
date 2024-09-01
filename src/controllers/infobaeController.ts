@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import boom from "@hapi/boom";
+import os from "os";
 
 import { DataParse, postQuery } from "@types";
 import infobaeService from "../services/infobaeService";
@@ -15,12 +16,14 @@ class InfobaeController {
     res: Response
   ): Promise<Response> {
     try {
+      const hostname = os.hostname();
       const { size, topic } = req.query as unknown as postQuery;
       const data = await infobaeService.servicePosts(topic);
       const allData = data.urlset.url.map((item: DataParse) => {
         return {
           lastmod: item.lastmod._text,
           link: item.loc._text,
+          hostname
         };
       });
       const dataParsed = allData.slice(0, size);
