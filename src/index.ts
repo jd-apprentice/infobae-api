@@ -1,6 +1,6 @@
-import app from "./server";
-import dotenv from "dotenv";
-dotenv.config();
-app.listen(process.env.PORT || 3000, (): void => {
-  console.log(`Server is running on port ${process.env.PORT}`);
-});
+import { app } from './server';
+import { config } from '#config';
+
+const startupMessage = 'Infobae API';
+
+app.listen(config.app.port, (): void => console.info(startupMessage));

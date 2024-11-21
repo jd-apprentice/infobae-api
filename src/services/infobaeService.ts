@@ -1,7 +1,5 @@
 import convert from "xml-js";
 import axios from "axios";
-import selectService from "../utils/index";
-import { JsonParsedProps } from "../models/types";
 
 class InfobaeService {
   /**
@@ -10,7 +8,7 @@ class InfobaeService {
    */
   async servicePosts(topic: string): Promise<JsonParsedProps> {
     try {
-      const dataInfobae = await axios.get(selectService(topic)!);
+      const dataInfobae = await axios.get(selectService(topic));
       const json = convert.xml2json(dataInfobae.data, {
         compact: true,
         ignoreComment: true,
