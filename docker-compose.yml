@@ -1,6 +1,6 @@
 services:
-  bun:
-    container_name: bun
+  infobae:
+    container_name: infobae
     build:
       context: .
       dockerfile: Dockerfile
