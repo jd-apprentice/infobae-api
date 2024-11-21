@@ -1,4 +1,4 @@
-import { ObjectUrls } from "../models/types";
+import { ObjectUrls } from "@types";
 
 const URL: ObjectUrls = {
   autos: "https://www.infobae.com/feeds/sitemap/sites/autos/",
@@ -13,5 +13,4 @@ const URL: ObjectUrls = {
   init: "https://www.infobae.com/sitemap.xml",
 };
 
-const selectService = (topic: string): string => URL[topic] || URL.init;
-export default selectService;
+export const selectService = (topic: string): string => URL[topic] || URL.init;
