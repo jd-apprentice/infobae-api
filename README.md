@@ -20,8 +20,5 @@
 
 ## 🧰 Stack
 
-- Typescript
-- Nodejs
-- Express
-- Axios
-- Render
+- Golang
+- Gin

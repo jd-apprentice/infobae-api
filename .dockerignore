@@ -1,2 +1,7 @@
+<<<<<<< Updated upstream
 node_modules
 npm-debug.log
+=======
+"**/*"
+"!**/*.go"
+>>>>>>> Stashed changes
