@@ -1,4 +1,4 @@
-name: test, analyze and publish
+name: test and publish
 
 on:
   workflow_dispatch:
@@ -23,37 +23,10 @@ jobs:
         uses: actions/setup-go@v5
 
       ## TODO: ADD STEPS
-  
-  analyze:
-    name: Analyze (${{ matrix.language }})
-    needs: [test]
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      packages: read
-      actions: read
-      contents: read
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-        - language: go
-          build-mode: none
-          
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
 
   release:
     uses: jd-apprentice/jd-workflows/.github/workflows/release.yml@main
-    needs: [test, analyze]
+    needs: [test]
     if: github.ref == 'refs/heads/master'
     with:
       name: test, analyze and publish
