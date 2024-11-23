@@ -1,17 +1,82 @@
 package controllers
 
-import "github.com/gin-gonic/gin"
+import (
+	"InfobaeAPI/src/constants"
+	"InfobaeAPI/src/models"
+	"InfobaeAPI/src/services"
+	"fmt"
+	"net/http"
 
-// TODO: Transform to JSON and return a random post
-func RandomInfobaePost(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Random Infobae Post",
+	"github.com/gin-gonic/gin"
+)
+
+// TODO: Try to REUSE logic from GetAllNews.
+// LastPost returns the last post from the /xml/news endpoint of Infobae.
+// The response will be a JSON object with the keys "message", "url", "lastmod", and "changefreq".
+// The "message" key will contain the message "This is the last Infobae post from /xml/news".
+// The "url", "lastmod", and "changefreq" keys will contain the values of the last post.
+func LastPost(c *gin.Context) {
+	url := fmt.Sprintf("%s%s", constants.BaseUrl, constants.RandomSection)
+
+	newsIndex := &models.NewsIndex{}
+
+	err := services.FetchAndParseXML(url, newsIndex)
+
+	news := services.FilterNews(newsIndex.URL)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching news index: %v", err)})
+		return
+	}
+
+	lastNew := news[len(news)-1]
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":    "This is the last Infobae post from /xml/news",
+		"url":        lastNew["url"],
+		"lastmod":    lastNew["lastmod"],
+		"changefreq": lastNew["changefreq"],
 	})
 }
 
-// TODO: Transform to JSON and return posts by topic
-func InfobaePostByTopic(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Infobae Post By Topic",
-	})
+// TODO: Investigate if this is efficient.
+// PostByTopic returns a JSON response with the last posts for the given topic.
+// The topic should be one of the categories returned by the /sitemap endpoint.
+// The response will be a JSON object with a single key "news" which is an array
+// of objects with the keys "url", "lastmod", and "changefreq".
+func PostByTopic(c *gin.Context) {
+	category := c.Param("topic")
+	url := constants.InfobaeIndex
+
+	sitemapIndex := &models.SitemapIndex{}
+	newsIndex := &models.NewsIndex{}
+
+	err := services.FetchAndParseXML(url, sitemapIndex)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching sitemap index: %v", err)})
+		return
+	}
+
+	sitemaps := services.FilterSitemaps(sitemapIndex.Sitemaps)
+
+	for _, sitemap := range sitemaps {
+
+		sitemapURL := fmt.Sprintf("%s", sitemap["url"])
+
+		if sitemap["category"] == category {
+			err := services.FetchAndParseXML(sitemapURL, newsIndex)
+			news := services.FilterNews(newsIndex.URL)
+
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching news index: %v", err)})
+				return
+			}
+
+			c.JSON(http.StatusOK, gin.H{
+				"news": news,
+			})
+			return
+		}
+	}
 }
