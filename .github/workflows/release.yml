@@ -21,8 +21,11 @@ jobs:
 
       - name: Set up Go
         uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.2
 
-      ## TODO: ADD STEPS
+      - name: Test
+        run: go test -v ./tests
 
   release:
     uses: jd-apprentice/jd-workflows/.github/workflows/release.yml@main
