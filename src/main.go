@@ -33,9 +33,10 @@ func main() {
 		})
 	})
 
-	infobae.GET("/", controllers.RandomInfobaePost)
-	infobae.GET("/:topic", controllers.InfobaePostByTopic)
-	xml.GET("/sitemap", controllers.SitemapIndex)
+	infobae.GET("/", controllers.LastPost)
+	infobae.GET("/:topic", controllers.PostByTopic)
+	xml.GET("/sitemap", controllers.GetSitemaps)
+	xml.GET("/news", controllers.GetNews)
 
 	port := fmt.Sprintf(":%s", config.App.Port)
 	r.Run(port)

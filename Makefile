@@ -1,6 +1,9 @@
+all: lint test build start
 
-.PHONY: dev
-dev:
+start:
+	./bin/InfobaeAPI
+
+dev: path
 	gowatch
 
 fmt:
@@ -24,3 +27,6 @@ build-arm: clear fmt
 
 test:
 	go test ./src/...
+
+path:
+	export PATH=$PATH:$HOME/go/bin
