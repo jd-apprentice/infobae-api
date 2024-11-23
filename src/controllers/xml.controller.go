@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"InfobaeAPI/src/constants"
+	"InfobaeAPI/src/models"
 	"InfobaeAPI/src/services"
 	"fmt"
 	"net/http"
@@ -14,15 +15,19 @@ import (
 // and returning the filtered list of sitemaps in the response body.
 func SitemapIndex(c *gin.Context) {
 	url := constants.InfobaeIndex
-	sitemapIndex, err := services.FetchAndParseSitemapIndex(url)
+
+	sitemapIndex := &models.SitemapIndex{}
+
+	err := services.FetchAndParseXML(url, sitemapIndex)
+
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching sitemap index: %v", err)})
 		return
 	}
 
-	filtered := services.FilterSitemaps(sitemapIndex.Sitemaps)
+	sitemaps := services.FilterSitemaps(sitemapIndex.Sitemaps)
 
 	c.JSON(http.StatusOK, gin.H{
-		"sitemaps": filtered,
+		"sitemaps": sitemaps,
 	})
 }
