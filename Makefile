@@ -1,5 +1,7 @@
+
+.PHONY: dev
 dev:
-	go run ./src/main.go
+	gowatch
 
 fmt:
 	@if [ -n "$$(go fmt ./src)" ]; then \

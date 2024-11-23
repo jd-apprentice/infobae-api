@@ -1,13 +1,21 @@
 package main
 
 import (
+	"InfobaeAPI/src/config"
 	"InfobaeAPI/src/controllers"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+
+	config := config.GetConfig()
+
 	r := gin.Default()
+	for _, proxy := range config.Proxies {
+		r.SetTrustedProxies([]string{proxy})
+	}
 
 	api := r.Group("/api")
 	xml := r.Group("/xml")
@@ -29,5 +37,6 @@ func main() {
 	infobae.GET("/:topic", controllers.InfobaePostByTopic)
 	xml.GET("/sitemap", controllers.SitemapIndex)
 
-	r.Run(":8080")
+	port := fmt.Sprintf(":%s", config.App.Port)
+	r.Run(port)
 }

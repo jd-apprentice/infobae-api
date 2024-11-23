@@ -3,7 +3,9 @@ package constants
 type ObjectUrls map[string]string
 
 const (
-	BaseUrl      = "https://www.infobae.com"
-	BaseSection  = "/arc/outboundfeeds/sitemap-index-static/"
-	InfobaeIndex = BaseUrl + BaseSection
+	BaseUrl       = "https://www.infobae.com"
+	BaseFeed      = "/arc/outboundfeeds"
+	BaseSection   = BaseFeed + "/sitemap-index-static/"
+	RandomSection = BaseFeed + "/news-sitemap2/"
+	InfobaeIndex  = BaseUrl + BaseSection
 )
