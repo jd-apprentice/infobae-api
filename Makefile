@@ -26,7 +26,7 @@ build-arm: clear fmt
 	GOARCH=arm64 go build -o ./bin/InfobaeAPI ./src/main.go
 
 test:
-	go test ./src/...
+	go test -v ./tests
 
 path:
 	export PATH=$PATH:$HOME/go/bin

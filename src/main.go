@@ -2,6 +2,7 @@ package main
 
 import (
 	"InfobaeAPI/src/config"
+	"InfobaeAPI/src/constants"
 	"InfobaeAPI/src/controllers"
 	"fmt"
 
@@ -23,7 +24,7 @@ func main() {
 
 	api.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "Welcome to Infobae API",
+			"message": constants.WelcomeMessage,
 		})
 	})
 
