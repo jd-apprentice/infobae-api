@@ -2,6 +2,7 @@ package main
 
 import (
 	"InfobaeAPI/src/config"
+	"InfobaeAPI/src/constants"
 	"InfobaeAPI/src/controllers"
 	"fmt"
 
@@ -23,7 +24,7 @@ func main() {
 
 	api.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "Welcome to Infobae API",
+			"message": constants.WelcomeMessage,
 		})
 	})
 
@@ -33,9 +34,10 @@ func main() {
 		})
 	})
 
-	infobae.GET("/", controllers.RandomInfobaePost)
-	infobae.GET("/:topic", controllers.InfobaePostByTopic)
-	xml.GET("/sitemap", controllers.SitemapIndex)
+	infobae.GET("/", controllers.LastPost)
+	infobae.GET("/:topic", controllers.PostByTopic)
+	xml.GET("/sitemap", controllers.GetSitemaps)
+	xml.GET("/news", controllers.GetNews)
 
 	port := fmt.Sprintf(":%s", config.App.Port)
 	r.Run(port)
