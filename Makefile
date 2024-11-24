@@ -1,5 +1,7 @@
 all: lint test build start
 
+### Development
+
 start:
 	./bin/InfobaeAPI
 
@@ -30,3 +32,24 @@ test:
 
 path:
 	export PATH=$PATH:$HOME/go/bin
+
+### Kubernetes && Docker
+
+## https://www.digitalocean.com/community/tutorials/how-to-use-minikube-for-local-kubernetes-development-and-testing
+k8s-up:
+	minikube start
+
+k8s-down:
+	minikube stop
+
+k8s-apply:
+	kubectl apply -f ./kubernetes
+
+pods:
+	kubectl get pods -A
+
+compose-up:
+	docker compose -f ./docker/docker-compose.yml up -d --build
+
+compose-down:
+	docker compose -f ./docker/docker-compose.yml down

@@ -1,0 +1,18 @@
+services:
+  infobae:
+    container_name: infobae
+    ## https://hackernoon.com/how-to-harden-your-docker-containers-using-seccomp-security-profile-81153ucz
+    security_opt:
+      - no-new-privileges
+      - seccomp=./security/seccomp.json
+      - apparmor=./security/non-root.profile
+    restart: unless-stopped
+    cap_add:
+      - CHOWN
+      - NET_BIND_SERVICE
+    cap_drop: ["ALL"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:3000"
