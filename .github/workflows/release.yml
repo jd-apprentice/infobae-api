@@ -1,35 +1,17 @@
 name: test and publish
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [ "develop", "master" ]
-    paths:
-      - 'src/**'
+  workflow_run:
+    workflows: ["Docker Publish"]
+    types:
+      - completed
 
 permissions:
   contents: write
 
 jobs:
-  test:
-    name: test
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.23.2
-
-      - name: Test
-        run: go test -v ./tests
-
   release:
     uses: jd-apprentice/jd-workflows/.github/workflows/release.yml@main
-    needs: [test]
     if: github.ref == 'refs/heads/master'
     with:
       name: test, analyze and publish
