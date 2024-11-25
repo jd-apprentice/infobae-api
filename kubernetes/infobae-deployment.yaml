@@ -21,12 +21,28 @@ spec:
         io.kompose.service: infobae
     spec:
       containers:
-        - image: dyallo/infobae_api
+        - image: dyallo/infobae_api:X64_unstable
+          imagePullPolicy: Always
           name: infobae-dev
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: "0.5"
+              memory: 512Mi
+          livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
           ports:
             - containerPort: 3000
               protocol: TCP
           securityContext:
+            readOnlyRootFilesystem: true
+            runAsUser: 10000
             allowPrivilegeEscalation: false
             capabilities:
               add:
