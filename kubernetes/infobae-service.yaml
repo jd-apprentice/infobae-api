@@ -1,17 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose -f docker-compose.yml convert
-    kompose.version: 1.34.0 (HEAD)
   labels:
-    io.kompose.service: infobae
-  name: infobae
+    io.kompose.service: infobae-api
+  name: infobae-api
 spec:
   ports:
-    - name: "5000"
-      port: 5000
+    - name: 'tcp'
+      port: 3000
       targetPort: 3000
   selector:
-    io.kompose.service: infobae
-  type: NodePort
+    io.kompose.service: infobae-api
+  type: LoadBalancer
