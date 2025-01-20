@@ -15,14 +15,13 @@ spec:
         io.kompose.service: infobae-api
     spec:
       containers:
-        - image: dyallo/infobae_api
+        - image: dyallo/infobae_api:X64_unstable
           name: infobae-api
           ports:
             - containerPort: 3000
               protocol: TCP
       restartPolicy: Always
       securityContext:
-        runAsNonRoot: true
         allowPrivilegeEscalation: false
 
 ---
@@ -43,12 +42,11 @@ spec:
         io.kompose.service: infobae-api
     spec:
       containers:
-        - image: dyallo/infobae_api
+        - image: dyallo/infobae_api:X64_latest
           name: infobae-api
           ports:
             - containerPort: 3000
               protocol: TCP
       restartPolicy: Always
       securityContext:
-        runAsNonRoot: true
         allowPrivilegeEscalation: false
