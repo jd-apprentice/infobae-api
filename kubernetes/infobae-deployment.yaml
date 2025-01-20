@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - image: dyallo/infobae_api:X64_unstable
-          name: infobae-api
+          name: infobae-api-unstable
           ports:
             - containerPort: 3000
               protocol: TCP
@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
         - image: dyallo/infobae_api:X64_latest
-          name: infobae-api
+          name: infobae-api-master
           ports:
             - containerPort: 3000
               protocol: TCP
