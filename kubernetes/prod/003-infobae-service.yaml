@@ -2,13 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    io.kompose.service: infobae-api
-  name: infobae-api
+    io.kompose.service: infobae-api-prod
+  name: infobae-api-prod
 spec:
   ports:
     - name: 'tcp'
       port: 3000
       targetPort: 3000
   selector:
-    io.kompose.service: infobae-api
+    io.kompose.service: infobae-api-prod
   type: NodePort
