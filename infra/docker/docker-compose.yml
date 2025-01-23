@@ -12,7 +12,7 @@ services:
       - NET_BIND_SERVICE
     cap_drop: ["ALL"]
     build:
-      context: ../
-      dockerfile: docker/Dockerfile
+      context: ../../
+      dockerfile: infra/docker/Dockerfile
     ports:
       - "${PORT}:3000"
