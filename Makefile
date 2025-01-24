@@ -43,13 +43,13 @@ k8s-down:
 	minikube stop
 
 k8s-apply:
-	kubectl apply -f ./kubernetes
+	kubectl apply -f ./infra/kubernetes
 
 pods:
 	kubectl get pods -A
 
 compose-up:
-	docker compose -f ./docker/docker-compose.yml up -d --build
+	docker compose -f ./infra/docker/docker-compose.yml up -d --build
 
 compose-down:
-	docker compose -f ./docker/docker-compose.yml down
+	docker compose -f ./infra/docker/docker-compose.yml down
