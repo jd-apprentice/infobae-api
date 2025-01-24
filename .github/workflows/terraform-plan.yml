@@ -10,31 +10,8 @@ env:
   CONFIG_DIRECTORY: "./infra/terraform"
 
 jobs:
-  wireguard:
-    name: "Wireguard"
-    runs-on: ubuntu-latest
-    steps:
-        - name: Set up WireGuard
-          uses: egor-tensin/setup-wireguard@v1.2.0
-          with:
-            endpoint: ${{ secrets.WG_ENDPOINT }}
-            endpoint_public_key: ${{ secrets.WG_ENDPOINT_PUBLIC_KEY }}
-            ips: ${{ secrets.WG_ENDPOINT_IPS }}
-            allowed_ips: ${{ secrets.WG_ENDPOINT_ALLOWED_IPS }}
-            private_key: ${{ secrets.WG_PRIVATE_KEY }}
-            preshared_key: ${{ secrets.WG_PRESHARED_KEY }}
-        
-  ping:
-    name: "Ping"
-    runs-on: ubuntu-latest
-    needs: wireguard
-    steps:
-      - name: Ping
-        run: ping -c 3 ${{ secrets.WG_ENDPOINT_IPS}}
-
   terraform:
     name: "Terraform Plan"
-    needs: [wireguard, ping]
     runs-on: ubuntu-latest
     permissions:
       contents: read
