@@ -6,6 +6,6 @@ variable "infobae_namespace" {
 
 variable "infobae-kubeconfig" {
   type      = string
-  default   = "/etc/rancher/k3s/k3s.yaml"
+  default   = "~/.kube/config.yaml"
   sensitive = false
 }

@@ -1,0 +1,3 @@
+module "infobae" {
+  source = "./kubernetes"
+}

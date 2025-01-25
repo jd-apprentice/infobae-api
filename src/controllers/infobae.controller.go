@@ -32,7 +32,7 @@ func LastPost(c *gin.Context) {
 	lastNew := news[len(news)-1]
 
 	c.JSON(http.StatusOK, gin.H{
-		"message":    "This is the last Infobae post from /xml/news",
+		"message":    constants.LastPostMessage,
 		"url":        lastNew["url"],
 		"lastmod":    lastNew["lastmod"],
 		"changefreq": lastNew["changefreq"],
