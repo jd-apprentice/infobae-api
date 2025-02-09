@@ -24,11 +24,11 @@ func FetchAndParseXML(url string, model interface{}) error {
 		return err
 	}
 
-	switch model.(type) {
+	switch model := model.(type) {
 	case *models.SitemapIndex:
-		err = xml.Unmarshal(body, model.(*models.SitemapIndex))
+		err = xml.Unmarshal(body, model)
 	case *models.NewsIndex:
-		err = xml.Unmarshal(body, model.(*models.NewsIndex))
+		err = xml.Unmarshal(body, model)
 	default:
 		return fmt.Errorf("invalid model type: %T", model)
 	}

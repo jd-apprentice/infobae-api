@@ -6,6 +6,7 @@ import (
 	"InfobaeAPI/src/services"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -46,12 +47,25 @@ func LastPost(c *gin.Context) {
 // of objects with the keys "url", "lastmod", and "changefreq".
 func PostByTopic(c *gin.Context) {
 	category := c.Param("topic")
+	size := c.Query("size")
+
+	if size == "" {
+		size = "5"
+	}
+
+	sizeInt, err := strconv.Atoi(size)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size parameter"})
+		return
+	}
+
 	url := constants.InfobaeIndex
 
 	sitemapIndex := &models.SitemapIndex{}
 	newsIndex := &models.NewsIndex{}
 
-	err := services.FetchAndParseXML(url, sitemapIndex)
+	err = services.FetchAndParseXML(url, sitemapIndex)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching sitemap index: %v", err)})
@@ -73,9 +87,12 @@ func PostByTopic(c *gin.Context) {
 				return
 			}
 
+			news = news[:sizeInt]
+
 			c.JSON(http.StatusOK, gin.H{
 				"news": news,
 			})
+
 			return
 		}
 	}

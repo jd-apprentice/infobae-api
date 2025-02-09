@@ -5,6 +5,7 @@ import (
 	"InfobaeAPI/src/constants"
 	"InfobaeAPI/src/controllers"
 	"fmt"
+	"log"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,7 +16,11 @@ func main() {
 
 	r := gin.Default()
 	for _, proxy := range config.Proxies {
-		r.SetTrustedProxies([]string{proxy})
+		err := r.SetTrustedProxies([]string{proxy})
+
+		if err != nil {
+			log.Printf("Error setting trusted proxies: %v", err)
+		}
 	}
 
 	api := r.Group("/api")
@@ -40,5 +45,14 @@ func main() {
 	xml.GET("/news", controllers.GetNews)
 
 	port := fmt.Sprintf(":%s", config.App.Port)
-	r.Run(port)
+
+	if port == ":" {
+		port = ":3000"
+	}
+
+	err := r.Run(port)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
