@@ -17,6 +17,9 @@ fmt:
 lint:
 	golangci-lint run
 
+lint-fix:
+	golangci-lint run --fix
+
 clear:
 	rm -rf ./bin
 
