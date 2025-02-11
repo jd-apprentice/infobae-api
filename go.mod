@@ -2,17 +2,11 @@ module InfobaeAPI
 
 go 1.23.2
 
-require (
-	github.com/gin-gonic/gin v1.10.0
-	github.com/joho/godotenv v1.5.1
-)
+require github.com/gin-gonic/gin v1.10.0
 
 require (
-	github.com/fsnotify/fsnotify v1.8.0 // indirect
-	github.com/mitchellh/go-ps v1.0.0 // indirect
-	github.com/silenceper/gowatch v1.5.3 // indirect
-	github.com/silenceper/log v0.0.0-20171204144354-e5ac7fa8a76a // indirect
-	gopkg.in/yaml.v1 v1.0.0-20140924161607-9f9df34309c0 // indirect
+	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
+	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 )
 
 require (
