@@ -42,6 +42,7 @@ func LastPost(c *gin.Context) {
 
 // TODO: Investigate if this is efficient.
 // PostByTopic returns a JSON response with the last posts for the given topic.
+// The size parameter is optional and defaults to 5.
 // The topic should be one of the categories returned by the /sitemap endpoint.
 // The response will be a JSON object with a single key "news" which is an array
 // of objects with the keys "url", "lastmod", and "changefreq".
