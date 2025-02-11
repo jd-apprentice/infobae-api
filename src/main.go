@@ -1,7 +1,6 @@
 package main
 
 import (
-	"InfobaeAPI/src/config"
 	"InfobaeAPI/src/constants"
 	"InfobaeAPI/src/controllers"
 	"fmt"
@@ -11,10 +10,8 @@ import (
 
 func main() {
 
-	config := config.GetConfig()
-
 	r := gin.Default()
-	err := r.SetTrustedProxies([]string{"127.0.0.1"})
+	err := r.SetTrustedProxies([]string{constants.TrustedProxies})
 
 	if err != nil {
 		panic(err)
@@ -41,7 +38,7 @@ func main() {
 	xml.GET("/sitemap", controllers.GetSitemaps)
 	xml.GET("/news", controllers.GetNews)
 
-	port := fmt.Sprintf(":%s", config.App.Port)
+	port := fmt.Sprintf(":%s", constants.AppPort)
 
 	err = r.Run(port)
 
