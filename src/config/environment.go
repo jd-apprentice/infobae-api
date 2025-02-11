@@ -24,10 +24,6 @@ func GetConfig() Config {
 	port := os.Getenv("PORT")
 	allowed_proxies := strings.Split(os.Getenv("ALLOWED_PROXIES"), ",")
 
-	if len(allowed_proxies) == 0 {
-		allowed_proxies = []string{"127.0.0.1", "noticias.jonathan.com.ar"}
-	}
-
 	return Config{
 		App: struct {
 			Port string

@@ -34,7 +34,7 @@ test:
 	go test -v ./tests
 
 path:
-	export PATH=$PATH:$HOME/go/bin
+	export PATH=$$PATH:$$HOME/go/bin
 
 ### Kubernetes && Docker
 
