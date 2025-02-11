@@ -43,10 +43,6 @@ func main() {
 
 	port := fmt.Sprintf(":%s", config.App.Port)
 
-	if port == ":" {
-		port = ":3000"
-	}
-
 	err = r.Run(port)
 
 	if err != nil {
