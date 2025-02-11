@@ -1,4 +1,4 @@
-all: lint test build start
+all: lint test imports build start
 
 ### Development
 
@@ -14,10 +14,13 @@ fmt:
         exit 1; \
     fi
 
-lint:
+imports: path
+	goimports -w ./src
+
+lint: path
 	golangci-lint run
 
-lint-fix:
+lint-fix: path
 	golangci-lint run --fix
 
 clear:
