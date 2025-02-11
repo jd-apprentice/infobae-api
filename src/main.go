@@ -14,12 +14,10 @@ func main() {
 	config := config.GetConfig()
 
 	r := gin.Default()
-	for _, proxy := range config.Proxies {
-		err := r.SetTrustedProxies([]string{proxy})
+	err := r.SetTrustedProxies([]string{"127.0.0.1"})
 
-		if err != nil {
-			panic(err)
-		}
+	if err != nil {
+		panic(err)
 	}
 
 	api := r.Group("/api")
@@ -49,7 +47,7 @@ func main() {
 		port = ":3000"
 	}
 
-	err := r.Run(port)
+	err = r.Run(port)
 
 	if err != nil {
 		panic(err)
