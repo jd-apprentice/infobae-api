@@ -3,7 +3,6 @@ package config
 import (
 	"log"
 	"os"
-	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -12,7 +11,6 @@ type Config struct {
 	App struct {
 		Port string
 	}
-	Proxies []string
 }
 
 func GetConfig() Config {
@@ -22,7 +20,10 @@ func GetConfig() Config {
 	}
 
 	port := os.Getenv("PORT")
-	allowed_proxies := strings.Split(os.Getenv("ALLOWED_PROXIES"), ",")
+
+	if port == "" {
+		port = "3000"
+	}
 
 	return Config{
 		App: struct {
@@ -30,6 +31,5 @@ func GetConfig() Config {
 		}{
 			Port: port,
 		},
-		Proxies: allowed_proxies,
 	}
 }
