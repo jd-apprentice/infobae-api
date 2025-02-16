@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "example" {
+resource "kubernetes_namespace" "infobae_api_prod" {
   metadata {
     name = var.infobae_namespace
   }
@@ -6,25 +6,31 @@ resource "kubernetes_namespace" "example" {
 
 resource "kubernetes_deployment" "infobae_api_prod" {
   metadata {
-    name = "infobae-api-prod"
+    namespace = var.infobae_namespace
+    name      = "infobae-api-prod"
     labels = {
-      io_kompose_service = "infobae-api-prod"
+      "io.kompose.service" = "infobae-api-prod"
+      restarted_at         = replace(replace(replace(timestamp(), ":", ""), "T", "_"), "Z", "")
+    }
+
+    annotations = {
+      restarted_at = timestamp()
     }
   }
 
   spec {
-    replicas = 2
+    replicas = 3
 
     selector {
       match_labels = {
-        io_kompose_service = "infobae-api-prod"
+        "io.kompose.service" = "infobae-api-prod"
       }
     }
 
     template {
       metadata {
         labels = {
-          io_kompose_service = "infobae-api-prod"
+          "io.kompose.service" = "infobae-api-prod"
         }
       }
 
@@ -49,9 +55,15 @@ resource "kubernetes_deployment" "infobae_api_prod" {
 
 resource "kubernetes_service" "infobae_api_prod" {
   metadata {
-    name = "infobae-api-prod"
+    namespace = var.infobae_namespace
+    name      = "infobae-api-prod"
     labels = {
       "io.kompose.service" = "infobae-api-prod"
+      restarted_at         = replace(replace(replace(timestamp(), ":", ""), "T", "_"), "Z", "")
+    }
+
+    annotations = {
+      restarted_at = timestamp()
     }
   }
 
@@ -61,12 +73,12 @@ resource "kubernetes_service" "infobae_api_prod" {
     }
 
     port {
-      name        = "tcp"
+      name        = "3000"
       port        = 3000
       target_port = 3000
+      node_port   = 31430
     }
 
     type = "NodePort"
   }
 }
-
