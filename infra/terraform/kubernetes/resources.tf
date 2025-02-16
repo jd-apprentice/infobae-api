@@ -5,6 +5,7 @@ resource "kubernetes_namespace" "infobae_api_prod" {
 }
 
 resource "kubernetes_deployment" "infobae_api_prod" {
+  depends_on = [kubernetes_namespace.infobae_api_prod]
   metadata {
     namespace = var.infobae_namespace
     name      = "infobae-api-prod"
@@ -54,6 +55,7 @@ resource "kubernetes_deployment" "infobae_api_prod" {
 }
 
 resource "kubernetes_service" "infobae_api_prod" {
+  depends_on = [kubernetes_deployment.infobae_api_prod]
   metadata {
     namespace = var.infobae_namespace
     name      = "infobae-api-prod"
