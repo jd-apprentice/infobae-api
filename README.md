@@ -22,3 +22,5 @@
 
 - Golang
 - Gin
+- Pre-commit
+- CodeQL
