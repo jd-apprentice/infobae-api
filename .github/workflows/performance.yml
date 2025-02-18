@@ -1,0 +1,21 @@
+## https://github.com/marketplace/actions/setup-grafana-k6
+## https://github.com/marketplace/actions/run-grafana-k6-tests
+
+name: K6 Performance Test
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  infobae:
+    name: Run K6 Local - Infobae
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+      - uses: grafana/setup-k6-action@f4151e22f5aa4d4e8a16c2b992792a8f28a619fb
+      - uses: grafana/run-k6-action@3b3d94c9ae5cd3bb5f6ce2b02028bd9a12b3ba8f
+        with:
+          path: |
+            performance/api-infobae.js
