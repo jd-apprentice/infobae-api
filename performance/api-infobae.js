@@ -1,5 +1,6 @@
 // Usage: k6 cloud run performance/api-infobae.js  --env TARGET_URL=<target-url>
 // https://grafana.com/docs/k6/latest/using-k6/environment-variables/
+// https://grafana.com/docs/k6/latest/get-started/results-output/
 
 import http from 'k6/http';
 import { check, sleep } from 'k6';
