@@ -1,0 +1,18 @@
+meta {
+  name: BASE
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BASE_URL}}/api/infobae
+  body: none
+  auth: none
+}
+
+assert {
+  res.body.changefreq: contains hourly
+  res.body.lastmod: isString
+  res.body.message: eq This is the last Infobae post from /xml/news
+  res.body.url: contains https://www.infobae.com
+}

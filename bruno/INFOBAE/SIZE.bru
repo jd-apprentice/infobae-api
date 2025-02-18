@@ -1,0 +1,20 @@
+meta {
+  name: SIZE
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BASE_URL}}/api/infobae/economia?size=2
+  body: none
+  auth: none
+}
+
+query {
+  size: 2
+}
+
+assert {
+  res.body: isJson 1
+  res.body.news.length: eq 2
+}
