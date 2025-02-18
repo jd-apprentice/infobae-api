@@ -10,6 +10,9 @@ on:
 
 jobs:
   infobae:
+    permissions:
+      contents: read
+      
     name: Run K6 Local - Infobae
     runs-on: ubuntu-latest
     steps:
