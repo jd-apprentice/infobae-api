@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "infobae_api_prod" {
       spec {
         container {
           name              = "infobae-api-prod"
-          image             = "dyallo/infobae_api:X64_latest"
+          image             = "dyallo/infobae_api:latest"
           image_pull_policy = "Always"
 
           port {
