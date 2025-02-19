@@ -51,11 +51,11 @@ jobs:
     with:
       context: .
       file: infra/docker/Dockerfile
-      tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:X64_${{ env.APP_DEV_VERSION }}
+      tags: ${{ env.APP_NAME }}:X64_${{ env.APP_DEV_VERSION }}
       platforms: linux/amd64,linux/arm64
     secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      docker_user: ${{ secrets.DOCKERHUB_USERNAME }}
+      docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
 
   master_amd64:
     permissions: 
@@ -67,8 +67,8 @@ jobs:
     with:
       context: .
       file: infra/docker/Dockerfile
-      tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:X64_${{ env.APP_VERSION }}
+      tags: ${{ env.APP_NAME }}:X64_${{ env.APP_VERSION }}
       platforms: linux/amd64,linux/arm64
     secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      docker_user: ${{ secrets.DOCKERHUB_USERNAME }}
+      docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
