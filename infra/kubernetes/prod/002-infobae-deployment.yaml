@@ -15,7 +15,7 @@ spec:
         io.kompose.service: infobae-api-prod
     spec:
       containers:
-        - image: dyallo/infobae_api:X64_latest
+        - image: dyallo/infobae_api:latest
           name: infobae-api-prod
           ports:
             - containerPort: 3000
