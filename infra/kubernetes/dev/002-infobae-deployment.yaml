@@ -15,7 +15,7 @@ spec:
         io.kompose.service: infobae-api-dev
     spec:
       containers:
-        - image: dyallo/infobae_api:X64_unstable
+        - image: dyallo/infobae_api:unstable
           name: infobae-api-dev
           ports:
             - containerPort: 3000
