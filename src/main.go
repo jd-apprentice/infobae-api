@@ -28,7 +28,8 @@ import (
 //	@license.name	MIT
 //	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
-//	@host		http://localhost:31430
+//	@schemes	http
+//	@host		localhost:31430
 //	@BasePath	/api
 
 // @externalDocs.description	OpenAPI
