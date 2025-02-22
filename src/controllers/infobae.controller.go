@@ -11,12 +11,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// TODO: Try to REUSE logic from GetAllNews.
-// LastPost returns the last post from the /xml/news endpoint of Infobae.
-// The response will be a JSON object with the keys "message", "url", "lastmod", and "changefreq".
-// The "message" key will contain the message "This is the last Infobae post from /xml/news".
-// The "url", "lastmod", and "changefreq" keys will contain the values of the last post.
+// LastPost
+//
+//	@Summary		LastPost returns the last post from the /xml/news endpoint of Infobae.
+//	@Schemes		http
+//	@Description	The response will be a JSON object with the keys "message", "url", "lastmod", and "changefreq".
+//	@Description	The "message" key will contain the message "This is the last Infobae post from /xml/news".
+//	@Description	The "url", "lastmod", and "changefreq" keys will contain the values of the last post.
+//	@Tags			Infobae
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	map[string]interface{}
+//	@Router			/infobae/ [get]
 func LastPost(c *gin.Context) {
+
+	// TODO: Try to REUSE logic from GetAllNews.
+	// LastPost returns the last post from the /xml/news endpoint of Infobae.
+	// The response will be a JSON object with the keys "message", "url", "lastmod", and "changefreq".
+	// The "message" key will contain the message "This is the last Infobae post from /xml/news".
+	// The "url", "lastmod", and "changefreq" keys will contain the values of the last post.
+
 	url := fmt.Sprintf("%s%s", constants.BaseUrl, constants.RandomSection)
 
 	newsIndex := &models.NewsIndex{}
@@ -40,13 +54,25 @@ func LastPost(c *gin.Context) {
 	})
 }
 
-// TODO: Investigate if this is efficient.
-// PostByTopic returns a JSON response with the last posts for the given topic.
-// The size parameter is optional and defaults to 5.
-// The topic should be one of the categories returned by the /sitemap endpoint.
-// The response will be a JSON object with a single key "news" which is an array
-// of objects with the keys "url", "lastmod", and "changefreq".
+// PostByTopic
+//
+//	@Summary		PostByTopic returns a JSON response with the last posts for the given topic.
+//	@Schemes		http
+//	@Description	The response will be a JSON object with the keys "url", "lastmod", and "changefreq".
+//	@Description	The "url", "lastmod", and "changefreq" keys will contain the values of the last post.
+//	@Description	The size parameter is optional and defaults to 5.
+//	@Description	The topic should be one of the categories returned by the /sitemap endpoint.
+//	@Description	The response will be a JSON object with a single key "news" which is an array
+//	@Tags			Infobae
+//	@Accept			json
+//	@Produce		json
+//	@Param			topic	path	string	true	"Topic"
+//	@Success		200	{object}	map[string]interface{}
+//	@Router			/infobae/{topic} [get]
 func PostByTopic(c *gin.Context) {
+
+	// TODO: Investigate if this is efficient.
+
 	category := c.Param("topic")
 	size := c.Query("size")
 
