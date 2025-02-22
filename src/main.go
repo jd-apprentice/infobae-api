@@ -37,10 +37,10 @@ import (
 // @externalDocs.url			https://swagger.io/resources/open-api/
 func main() {
 
-	docs.SwaggerInfo.Host = "localhost:" + constants.AppPort
+	docs.SwaggerInfo.Host = "localhost:" + constants.NodePort
 
-	if os.Getenv("GIN_MODE") != "release" {
-		docs.SwaggerInfo.Host = "localhost:" + constants.NodePort
+	if os.Getenv("GIN_MODE") == "release" {
+		docs.SwaggerInfo.Host = "localhost:" + constants.AppPort
 	}
 
 	r := gin.Default()
