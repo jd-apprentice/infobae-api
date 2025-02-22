@@ -40,7 +40,7 @@ func main() {
 	docs.SwaggerInfo.Host = "localhost:" + constants.NodePort
 
 	if os.Getenv("GIN_MODE") == "release" {
-		docs.SwaggerInfo.Host = "localhost:" + constants.AppPort
+		docs.SwaggerInfo.Host = "noticias.jonathan.com.ar"
 	}
 
 	r := gin.Default()
