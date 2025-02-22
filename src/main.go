@@ -1,9 +1,11 @@
 package main
 
 import (
+	"InfobaeAPI/docs"
 	"InfobaeAPI/src/constants"
 	"InfobaeAPI/src/controllers"
 	"fmt"
+	"os"
 
 	// https://blog.csdn.net/Yu91an/article/details/136305784
 	// https://github.com/swaggo/swag/issues/1568
@@ -29,12 +31,17 @@ import (
 //	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
 //	@schemes	http
-//	@host		localhost:31430
 //	@BasePath	/api
 
 // @externalDocs.description	OpenAPI
 // @externalDocs.url			https://swagger.io/resources/open-api/
 func main() {
+
+	docs.SwaggerInfo.Host = constants.AppPort
+
+	if os.Getenv("GIN_MODE") != "release" {
+		docs.SwaggerInfo.Host = "localhost:" + constants.NodePort
+	}
 
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
