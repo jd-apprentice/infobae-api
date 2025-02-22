@@ -15,6 +15,7 @@
 ## 🚧 Routes  
 
 - **GET** `xml/sitemap` → Retrieve all sitemaps.  
+- **GET** `api/docs/index.html` → Swagger documentation.
 - **GET** `api/infobae/` → Fetch the latest news from the general sitemap.  
 - **GET** `api/infobae/topic/` → Fetch a specific topic.  
 - **GET** `api/infobae/topic/?size=x` → Fetch a specific topic with `x` posts.
@@ -50,6 +51,7 @@ $ curl -Ss "https://noticias.jonathan.com.ar/api/infobae/economia?size=2" | jq
 - Kubernetes  
 - Terraform  
 - Bruno
+- Swagger
 
 ## 📁 Folder structure
 

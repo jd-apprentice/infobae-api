@@ -1,4 +1,4 @@
-all: lint test imports build start
+all: lint test imports swag build start
 
 ### Development
 
@@ -18,13 +18,19 @@ imports: path
 	goimports -w ./src
 
 lint: path
-	golangci-lint run
+	golangci-lint run --exclude-dirs=docs
 
 lint-fix: path
-	golangci-lint run --fix
+	golangci-lint run --fix --exclude-dirs=docs
+
+swag: path
+	swag init -d src
 
 clear:
 	rm -rf ./bin
+
+cache:
+	go clean -modcache
 
 ## https://github.com/golang-standards/project-layout/issues/113#issuecomment-1336514449
 build: clear fmt
