@@ -13,9 +13,8 @@ RUN addgroup -S appgroup && adduser -S infobae -G appgroup
 WORKDIR /app
 COPY --from=build /app/bin/InfobaeAPI /app/bin/InfobaeAPI
 COPY --from=build /app/docs /app/docs
-ENV GIN_MODE=release
 
 USER infobae
-ENV PORT=3000
-EXPOSE ${PORT}
+ENV GIN_MODE=release
+EXPOSE 3000
 ENTRYPOINT ["/app/bin/InfobaeAPI"]
