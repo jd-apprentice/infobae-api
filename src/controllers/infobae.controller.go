@@ -66,8 +66,8 @@ func LastPost(c *gin.Context) {
 //	@Tags			Infobae
 //	@Accept			json
 //	@Produce		json
-//	@Param			topic	path	string	true	"Topic"
-//	@Success		200	{object}	map[string]interface{}
+//	@Param			topic	path		string	true	"Topic"
+//	@Success		200		{object}	map[string]interface{}
 //	@Router			/infobae/{topic} [get]
 func PostByTopic(c *gin.Context) {
 
