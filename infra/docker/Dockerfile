@@ -1,7 +1,7 @@
 FROM golang:alpine3.20 AS build
 
 WORKDIR /app
-COPY . /app
+COPY src go.mod go.sum /app/
 RUN go install github.com/swaggo/swag/cmd/swag@latest && \
     swag init -d src && \
     go mod download && \
