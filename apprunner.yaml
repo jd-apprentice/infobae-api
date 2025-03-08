@@ -3,6 +3,9 @@ runtime: go1
 build:
   commands:
     build:
-      - swag init -d src && go build -o ./bin/InfobaeAPI ./src/main.go
+      - go install github.com/swaggo/swag/cmd/swag@latest
+      - export PATH=$PATH:$(go env GOPATH)/bin
+      - swag init -d src
+      - go build -o ./bin/InfobaeAPI ./src/main.go
 run:
   command: ./bin/InfobaeAPI
