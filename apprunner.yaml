@@ -3,6 +3,6 @@ runtime: go1
 build:
   commands:
     build:
-      - go build src/main.go
+      - swag init -d src && go build -o ./bin/InfobaeAPI ./src/main.go
 run:
-  command: ./main
+  command: ./bin/InfobaeAPI
