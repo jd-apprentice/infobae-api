@@ -1,0 +1,69 @@
+basePath: /api
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:31430
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: InfobaeAPI is a REST API that provides access to the latest news from
+    Infobae.
+  license:
+    name: MIT
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: InfobaeAPI
+  version: "1.0"
+paths:
+  /infobae/:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        The response will be a JSON object with the keys "message", "url", "lastmod", and "changefreq".
+        The "message" key will contain the message "This is the last Infobae post from /xml/news".
+        The "url", "lastmod", and "changefreq" keys will contain the values of the last post.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: LastPost returns the last post from the /xml/news endpoint of Infobae.
+      tags:
+      - Infobae
+  /infobae/{topic}:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        The response will be a JSON object with the keys "url", "lastmod", and "changefreq".
+        The "url", "lastmod", and "changefreq" keys will contain the values of the last post.
+        The size parameter is optional and defaults to 5.
+        The topic should be one of the categories returned by the /sitemap endpoint.
+        The response will be a JSON object with a single key "news" which is an array
+      parameters:
+      - description: Topic
+        in: path
+        name: topic
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: PostByTopic returns a JSON response with the last posts for the given
+        topic.
+      tags:
+      - Infobae
+schemes:
+- http
+swagger: "2.0"

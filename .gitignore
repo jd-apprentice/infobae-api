@@ -31,7 +31,7 @@ bin
 *.db
 
 # Swagger
-docs/
+#docs/
 
 # vendor
 vendor/

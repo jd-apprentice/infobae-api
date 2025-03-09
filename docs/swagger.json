@@ -1,0 +1,86 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "InfobaeAPI is a REST API that provides access to the latest news from Infobae.",
+        "title": "InfobaeAPI",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:31430",
+    "basePath": "/api",
+    "paths": {
+        "/infobae/": {
+            "get": {
+                "description": "The response will be a JSON object with the keys \"message\", \"url\", \"lastmod\", and \"changefreq\".\nThe \"message\" key will contain the message \"This is the last Infobae post from /xml/news\".\nThe \"url\", \"lastmod\", and \"changefreq\" keys will contain the values of the last post.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Infobae"
+                ],
+                "summary": "LastPost returns the last post from the /xml/news endpoint of Infobae.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/infobae/{topic}": {
+            "get": {
+                "description": "The response will be a JSON object with the keys \"url\", \"lastmod\", and \"changefreq\".\nThe \"url\", \"lastmod\", and \"changefreq\" keys will contain the values of the last post.\nThe size parameter is optional and defaults to 5.\nThe topic should be one of the categories returned by the /sitemap endpoint.\nThe response will be a JSON object with a single key \"news\" which is an array",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Infobae"
+                ],
+                "summary": "PostByTopic returns a JSON response with the last posts for the given topic.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Topic",
+                        "name": "topic",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "OpenAPI",
+        "url": "https://swagger.io/resources/open-api/"
+    }
+}
