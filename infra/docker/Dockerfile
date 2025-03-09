@@ -1,10 +1,14 @@
 FROM golang:alpine3.20 AS build
 
 WORKDIR /app
-COPY src go.mod go.sum /app/
+COPY src /app/src
+COPY go.mod go.sum /app/
 COPY docs /app/docs
-RUN go mod download && \
-    go build -o ./bin/InfobaeAPI ./src/main.go
+RUN go mod download
+RUN go mod tidy
+
+WORKDIR /app/src
+RUN go build -o /app/bin/InfobaeAPI main.go
 
 FROM alpine:3.20
 
