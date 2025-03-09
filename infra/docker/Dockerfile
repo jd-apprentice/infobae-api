@@ -2,10 +2,8 @@ FROM golang:alpine3.20 AS build
 
 WORKDIR /app
 COPY src go.mod go.sum /app/
-RUN go install github.com/swaggo/swag/cmd/swag@latest && \
-    export PATH="$PATH:$(go env GOPATH)/bin" && \
-    swag init -d src && \
-    go mod download && \
+COPY docs /app/docs
+RUN go mod download && \
     go build -o ./bin/InfobaeAPI ./src/main.go
 
 FROM alpine:3.20
