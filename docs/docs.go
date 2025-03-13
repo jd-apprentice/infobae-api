@@ -81,18 +81,14 @@ const docTemplate = `{
                 }
             }
         }
-    },
-    "externalDocs": {
-        "description": "OpenAPI",
-        "url": "https://swagger.io/resources/open-api/"
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:31430",
-	BasePath:         "/api",
+	Host:             "",
+	BasePath:         "/v1/api",
 	Schemes:          []string{"http"},
 	Title:            "InfobaeAPI",
 	Description:      "InfobaeAPI is a REST API that provides access to the latest news from Infobae.",

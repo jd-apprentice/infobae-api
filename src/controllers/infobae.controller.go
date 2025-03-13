@@ -4,6 +4,7 @@ import (
 	"InfobaeAPI/src/constants"
 	"InfobaeAPI/src/models"
 	"InfobaeAPI/src/services"
+	"encoding/xml"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -23,30 +24,35 @@ import (
 //	@Produce		json
 //	@Success		200	{object}	map[string]interface{}
 //	@Router			/infobae/ [get]
-func LastPost(c *gin.Context) {
-
+func LastPost(context *gin.Context) {
 	// TODO: Try to REUSE logic from GetAllNews.
 	// LastPost returns the last post from the /xml/news endpoint of Infobae.
 	// The response will be a JSON object with the keys "message", "url", "lastmod", and "changefreq".
 	// The "message" key will contain the message "This is the last Infobae post from /xml/news".
 	// The "url", "lastmod", and "changefreq" keys will contain the values of the last post.
+	url := fmt.Sprintf("%s%s", constants.BaseURL, constants.RandomSection)
 
-	url := fmt.Sprintf("%s%s", constants.BaseUrl, constants.RandomSection)
-
-	newsIndex := &models.NewsIndex{}
+	newsIndex := &models.NewsIndex{
+		URL: []models.URL{},
+		XMLName: xml.Name{
+			Local: "urlset",
+			Space: "http://www.sitemaps.org/schemas/sitemap/0.9",
+		},
+	}
 
 	err := services.FetchAndParseXML(url, newsIndex)
 
 	news := services.FilterNews(newsIndex.URL)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching news index: %v", err)})
+		context.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching news index: %v", err)})
+
 		return
 	}
 
 	lastNew := news[len(news)-1]
 
-	c.JSON(http.StatusOK, gin.H{
+	context.JSON(http.StatusOK, gin.H{
 		"message":    constants.LastPostMessage,
 		"url":        lastNew["url"],
 		"lastmod":    lastNew["lastmod"],
@@ -69,12 +75,9 @@ func LastPost(c *gin.Context) {
 //	@Param			topic	path		string	true	"Topic"
 //	@Success		200		{object}	map[string]interface{}
 //	@Router			/infobae/{topic} [get]
-func PostByTopic(c *gin.Context) {
-
-	// TODO: Investigate if this is efficient.
-
-	category := c.Param("topic")
-	size := c.Query("size")
+func PostByTopic(context *gin.Context) {
+	category := context.Param("topic")
+	size := context.Query("size")
 
 	if size == "" {
 		size = "5"
@@ -83,7 +86,8 @@ func PostByTopic(c *gin.Context) {
 	sizeInt, err := strconv.Atoi(size)
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size parameter"})
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size parameter"})
+
 		return
 	}
 
@@ -95,32 +99,42 @@ func PostByTopic(c *gin.Context) {
 	err = services.FetchAndParseXML(url, sitemapIndex)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching sitemap index: %v", err)})
+		context.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching sitemap index: %v", err)})
+
 		return
 	}
 
 	sitemaps := services.FilterSitemaps(sitemapIndex.Sitemaps)
 
 	for _, sitemap := range sitemaps {
-
 		sitemapURL := fmt.Sprintf("%s", sitemap["url"])
-
 		if sitemap["category"] == category {
 			err := services.FetchAndParseXML(sitemapURL, newsIndex)
 			news := services.FilterNews(newsIndex.URL)
 
 			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching news index: %v", err)})
+				context.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching news index: %v", err)})
+
 				return
 			}
 
 			news = news[:sizeInt]
 
-			c.JSON(http.StatusOK, gin.H{
+			context.JSON(http.StatusOK, gin.H{
 				"news": news,
 			})
 
 			return
 		}
 	}
+
+	context.JSON(http.StatusNotFound, gin.H{"error": fmt.Sprintf("Topic %s not found", category)})
+}
+
+func LastDetailedPost(_ *gin.Context) {
+	// TODO: Create a function that scrapes the last post from the /xml/news endpoint of Infobae.
+	// The response should contain the title, description, and content (images) of the post.
+}
+func DetailsByTopic(_ *gin.Context) {
+	// TODO: Same as LastDetailedPost but for a specific topic.
 }

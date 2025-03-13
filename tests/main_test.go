@@ -1,4 +1,4 @@
-package tests
+package tests_test
 
 import (
 	"InfobaeAPI/src/constants"
@@ -11,6 +11,7 @@ import (
 )
 
 func TestAPIEndpoint(t *testing.T) {
+	t.Parallel()
 	gin.SetMode(gin.TestMode)
 
 	router := gin.Default()
@@ -21,17 +22,18 @@ func TestAPIEndpoint(t *testing.T) {
 		})
 	})
 
-	req, _ := http.NewRequest("GET", "/api/", nil)
-	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodGet, "/api/", nil)
+	www := httptest.NewRecorder()
 
-	router.ServeHTTP(w, req)
-	assert.Equal(t, 200, w.Code)
+	router.ServeHTTP(www, req)
+	assert.Equal(t, 200, www.Code)
 	message := constants.WelcomeMessage
 	expectedBody := `{"message":"` + message + `"}`
-	assert.JSONEq(t, expectedBody, w.Body.String())
+	assert.JSONEq(t, expectedBody, www.Body.String())
 }
 
 func TestInfobaeEndpoint(t *testing.T) {
+	t.Parallel()
 	gin.SetMode(gin.TestMode)
 
 	router := gin.Default()
@@ -42,17 +44,18 @@ func TestInfobaeEndpoint(t *testing.T) {
 		})
 	})
 
-	req, _ := http.NewRequest("GET", "/api/infobae/", nil)
-	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodGet, "/api/infobae/", nil)
+	www := httptest.NewRecorder()
 
-	router.ServeHTTP(w, req)
-	assert.Equal(t, 200, w.Code)
+	router.ServeHTTP(www, req)
+	assert.Equal(t, 200, www.Code)
 	message := constants.LastPostMessage
 	expectedBody := `{"message":"` + message + `"}`
-	assert.JSONEq(t, expectedBody, w.Body.String())
+	assert.JSONEq(t, expectedBody, www.Body.String())
 }
 
 func TestXMLEndpoint(t *testing.T) {
+	t.Parallel()
 	gin.SetMode(gin.TestMode)
 
 	router := gin.Default()
@@ -63,12 +66,12 @@ func TestXMLEndpoint(t *testing.T) {
 		})
 	})
 
-	req, _ := http.NewRequest("GET", "/xml/", nil)
-	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodGet, "/xml/", nil)
+	www := httptest.NewRecorder()
 
-	router.ServeHTTP(w, req)
-	assert.Equal(t, 200, w.Code)
+	router.ServeHTTP(www, req)
+	assert.Equal(t, 200, www.Code)
 	message := "Available index are at /xml/sitemap"
 	expectedBody := `{"message":"` + message + `"}`
-	assert.JSONEq(t, expectedBody, w.Body.String())
+	assert.JSONEq(t, expectedBody, www.Body.String())
 }

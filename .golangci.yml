@@ -1,0 +1,83 @@
+# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/golangci.jsonschema.json
+## Copied from https://github.com/microsoft/typescript-go
+### https://golangci-lint.run/usage/linters/
+
+run:
+  allow-parallel-runners: true
+  timeout: 180s
+
+linters:
+  disable-all: false
+  enable-all: true
+  disable:
+    - tenv
+    - godox
+    - gci
+    - gofumpt
+    - godot
+    - gofmt
+    - wsl
+
+linters-settings:
+  depguard:
+    # Rules to apply.
+    #
+    # Variables:
+    # - File Variables
+    #   Use an exclamation mark `!` to negate a variable.
+    #   Example: `!$test` matches any file that is not a go test file.
+    #
+    #   `$all` - matches all go files
+    #   `$test` - matches all go test files
+    #
+    # - Package Variables
+    #
+    #   `$gostd` - matches all of go's standard library (Pulled from `GOROOT`)
+    #
+    # Default (applies if no custom rules are defined): Only allow $gostd in all files.
+    rules:
+      # Name of a rule.
+      main:
+        # Defines package matching behavior. Available modes:
+        # - `original`: allowed if it doesn't match the deny list and either matches the allow list or the allow list is empty.
+        # - `strict`: allowed only if it matches the allow list and either doesn't match the deny list or the allow rule is more specific (longer) than the deny rule.
+        # - `lax`: allowed if it doesn't match the deny list or the allow rule is more specific (longer) than the deny rule.
+        # Default: "original"
+        list-mode: lax
+        # List of file globs that will match this list of settings to compare against.
+        # Default: $all
+        files:
+          - "!**/*_a _file.go"
+        # List of allowed packages.
+        # Entries can be a variable (starting with $), a string prefix, or an exact match (if ending with $).
+        # Default: []
+        allow:
+        - InfobaeAPI/src/config
+        - InfobaeAPI/src/constants
+        - InfobaeAPI/src/controllers
+        - InfobaeAPI/src/models
+        - InfobaeAPI/src/routes
+        - InfobaeAPI/docs
+        - github.com/getsentry/sentry-go
+        - github.com/gin-gonic/gin
+        - github.com/swaggo/gin-swagger
+        - github.com/swaggo/files
+        # List of packages that are not allowed.
+        # Entries can be a variable (starting with $), a string prefix, or an exact match (if ending with $).
+        # Default: []
+        deny:
+          - pkg: "math/rand$"
+            desc: use math/rand/v2
+          - pkg: "github.com/sirupsen/logrus"
+            desc: not allowed
+          - pkg: "github.com/pkg/errors"
+            desc: Should be replaced by standard lib errors package
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+  exclude:
+    - '^could not import'
+    - '^: #'
+    - 'imported and not used$'

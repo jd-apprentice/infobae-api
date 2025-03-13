@@ -5,14 +5,17 @@ all: lint test imports swag build start
 start:
 	./bin/InfobaeAPI
 
-dev: path
-	gowatch
+dev: docs path
+	air -c .air.toml
 
 fmt:
 	@if [ -n "$$(go fmt ./src)" ]; then \
         echo "Code is not properly formatted"; \
         exit 1; \
     fi
+
+fmt-fix:
+	go fmt ./src
 
 imports: path
 	goimports -w ./src
@@ -23,7 +26,7 @@ lint: path
 lint-fix: path
 	golangci-lint run --fix --exclude-dirs=docs
 
-swag: path
+docs: path
 	swag init -d src
 
 clear:
