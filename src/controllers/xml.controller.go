@@ -14,7 +14,7 @@ import (
 // https://www.infobae.com/arc/outboundfeeds/sitemap-index-static/ and
 // filters out the sitemap for /sitemap2/ and news-sitemap2. The rest of
 // the sitemaps are returned as a JSON array in the response body.
-func GetSitemaps(c *gin.Context) {
+func GetSitemaps(context *gin.Context) {
 	url := constants.InfobaeIndex
 
 	sitemapIndex := &models.SitemapIndex{}
@@ -22,22 +22,23 @@ func GetSitemaps(c *gin.Context) {
 	err := services.FetchAndParseXML(url, sitemapIndex)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching sitemap index: %v", err)})
+		context.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching sitemap index: %v", err)})
+
 		return
 	}
 
 	sitemaps := services.FilterSitemaps(sitemapIndex.Sitemaps)
 
-	c.JSON(http.StatusOK, gin.H{
+	context.JSON(http.StatusOK, gin.H{
 		"sitemaps": sitemaps,
 	})
 }
 
 // GetNews fetches and parses the news index at a random section of the
-// website and filters out the news. The news are returned as a JSON array
+// wwwsite and filters out the news. The news are returned as a JSON array
 // in the response body.
-func GetNews(c *gin.Context) {
-	url := fmt.Sprintf("%s%s", constants.BaseUrl, constants.RandomSection)
+func GetNews(context *gin.Context) {
+	url := fmt.Sprintf("%s%s", constants.BaseURL, constants.RandomSection)
 
 	newsIndex := &models.NewsIndex{}
 
@@ -46,11 +47,12 @@ func GetNews(c *gin.Context) {
 	news := services.FilterNews(newsIndex.URL)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching news index: %v", err)})
+		context.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error fetching news index: %v", err)})
+
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
+	context.JSON(http.StatusOK, gin.H{
 		"news": news,
 	})
 }

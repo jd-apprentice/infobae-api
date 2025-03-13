@@ -18,8 +18,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:31430",
-    "basePath": "/api",
+    "basePath": "/v1/api",
     "paths": {
         "/infobae/": {
             "get": {
@@ -78,9 +77,5 @@
                 }
             }
         }
-    },
-    "externalDocs": {
-        "description": "OpenAPI",
-        "url": "https://swagger.io/resources/open-api/"
     }
 }

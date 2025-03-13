@@ -22,7 +22,7 @@ export const options = {
  * @description K6 performance test
  */
 export default function () {
-    const url = __ENV.TARGET_URL || "https://noticias.jonathan.com.ar/api/infobae";
+    const url = __ENV.TARGET_URL || "https://news.jonathan.com.ar/api/infobae";
 
     // {"changefreq":"string","lastmod":"string","message":"string","url":"https://www.infobae.com/..."}
 
