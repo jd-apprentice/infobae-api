@@ -1,0 +1,16 @@
+meta {
+  name: details-by-topic
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{BASE_URL}}/api/infobae/details/economia
+  body: none
+  auth: none
+}
+
+assert {
+  res.body: isDefined 
+  res.status: eq 200
+}

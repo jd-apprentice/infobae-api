@@ -1,0 +1,20 @@
+meta {
+  name: details
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{BASE_URL}}/api/infobae/details
+  body: none
+  auth: none
+}
+
+query {
+  : 
+}
+
+assert {
+  res.body: isDefined 
+  res.status: eq 200
+}
