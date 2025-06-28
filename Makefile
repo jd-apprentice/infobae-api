@@ -2,6 +2,12 @@ all: lint test imports swag build start
 
 ### Development
 
+audit:
+	govulncheck ./...
+
+update:
+	go get -u ./...
+
 start:
 	./bin/InfobaeAPI
 
