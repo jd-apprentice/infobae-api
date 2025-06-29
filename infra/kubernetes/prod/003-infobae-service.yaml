@@ -9,6 +9,7 @@ spec:
     - name: 'tcp'
       port: 3000
       targetPort: 3000
+      nodePort: 31430
   selector:
     io.kompose.service: infobae-api
   type: NodePort
