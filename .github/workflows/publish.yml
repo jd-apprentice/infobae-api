@@ -6,17 +6,11 @@ on:
     branches: [ "develop" ]
     paths:
       - 'src/**'
-      - 'infra/docker/**'
-      - 'infra/kubernetes/**'
-      - '.github/workflows/publish.yml'
       - 'tests/**'
   push:
     branches: [ "develop", "master" ]
     paths:
       - 'src/**'
-      - 'infra/docker/**'
-      - 'infra/kubernetes/**'
-      - '.github/workflows/publish.yml'
       - 'tests/**'
   
 env:
