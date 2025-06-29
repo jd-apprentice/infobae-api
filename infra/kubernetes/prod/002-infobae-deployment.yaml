@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: infobae-api-prod
-  name: infobae-api-prod
+    io.kompose.service: infobae-api
+  name: infobae-api
 spec:
   replicas: 2
   selector:
     matchLabels:
-      io.kompose.service: infobae-api-prod
+      io.kompose.service: infobae-api
   template:
     metadata:
       labels:
-        io.kompose.service: infobae-api-prod
+        io.kompose.service: infobae-api
     spec:
       containers:
         - image: dyallo/infobae_api:latest
-          name: infobae-api-prod
+          name: infobae-api
           ports:
             - containerPort: 3000
               protocol: TCP
