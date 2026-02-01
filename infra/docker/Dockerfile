@@ -1,4 +1,4 @@
-FROM golang:alpine3.20 AS build
+FROM golang:alpine3.23 AS build
 
 WORKDIR /app
 COPY src /app/src
@@ -10,7 +10,7 @@ RUN go mod tidy
 WORKDIR /app/src
 RUN go build -o /app/bin/InfobaeAPI main.go
 
-FROM alpine:3.20
+FROM alpine:3.23
 
 RUN addgroup -S appgroup && adduser -S infobae -G appgroup
 WORKDIR /app

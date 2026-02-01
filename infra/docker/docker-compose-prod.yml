@@ -1,0 +1,14 @@
+services:
+  infobae:
+    image: dyallo/infobae_api:latest
+    container_name: infobae
+    ## https://hackernoon.com/how-to-harden-your-docker-containers-using-seccomp-security-profile-81153ucz
+    security_opt:
+      - no-new-privileges
+    restart: unless-stopped
+    cap_add:
+      - CHOWN
+      - NET_BIND_SERVICE
+    cap_drop: [ "ALL" ]
+    ports:
+      - "3000:3000"
