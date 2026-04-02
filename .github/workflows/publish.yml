@@ -12,8 +12,8 @@ on:
     paths:
       - "src/**"
       - ".github/workflows/*.yml"
-  tags:
-    - "v*"
+  release:
+    types: [published]
 
 env:
   BRANCH_NAME: ${{ github.ref_name }}
