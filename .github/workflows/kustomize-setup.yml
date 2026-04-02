@@ -1,0 +1,21 @@
+name: Kustomize Setup
+
+on:
+  workflow_call:
+
+jobs:
+  setup:
+    name: Setup Kustomize
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.kustomize.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+
+      - name: Install Kustomize
+        id: kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.8.1
+          sudo mv kustomize /usr/local/bin/
+          echo "version=5.8.1" >> $GITHUB_OUTPUT
