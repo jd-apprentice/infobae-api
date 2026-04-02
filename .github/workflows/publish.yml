@@ -11,7 +11,7 @@ on:
     branches: ["develop", "master"]
     paths:
       - "src/**"
-      - "tests/**"
+      - ".github/workflows/*.yml"
 
 env:
   BRANCH_NAME: ${{ github.ref_name }}
