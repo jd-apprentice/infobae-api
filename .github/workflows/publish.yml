@@ -8,10 +8,9 @@ on:
       - "src/**"
       - "tests/**"
   push:
-    branches: ["develop", "master"]
-    paths:
-      - "src/**"
-      - ".github/workflows/*.yml"
+    branches: ["master"]
+    tags:
+      - "v*"
   release:
     types: [published]
 
@@ -46,7 +45,7 @@ jobs:
 
     runs-on: ubuntu-latest
     needs: test
-    if: ${{ github.ref_name != 'master' }}
+    if: ${{ github.ref_name != 'master' && !startsWith(github.ref_name, 'v') }}
     steps:
       - name: Checkout
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
