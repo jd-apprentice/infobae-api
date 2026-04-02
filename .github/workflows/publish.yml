@@ -3,16 +3,16 @@ name: Docker Publish
 on:
   workflow_dispatch:
   pull_request:
-    branches: [ "develop" ]
+    branches: ["develop"]
     paths:
-      - 'src/**'
-      - 'tests/**'
+      - "src/**"
+      - "tests/**"
   push:
-    branches: [ "develop", "master" ]
+    branches: ["develop", "master"]
     paths:
-      - 'src/**'
-      - 'tests/**'
-  
+      - "src/**"
+      - "tests/**"
+
 env:
   BRANCH_NAME: ${{ github.ref_name }}
   APP_NAME: infobae_api
@@ -21,15 +21,13 @@ env:
   AWS_ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
 
 jobs:
-
   test:
-    permissions: 
+    permissions:
       contents: read
 
     name: test
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
 
@@ -42,7 +40,7 @@ jobs:
         run: go test -v ./tests
 
   develop:
-    permissions: 
+    permissions:
       contents: read
 
     runs-on: ubuntu-latest
@@ -51,13 +49,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
 
       - name: Login to Docker Hub
         uses: docker/login-action@327cd5a69de6c009b9ce71bce8395f28e651bf99
@@ -75,16 +66,7 @@ jobs:
           file: infra/docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:${{ env.APP_DEV_VERSION }}
-          platforms: linux/amd64,linux/arm64
-  
-      - name: Login to AWS ECR
-        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ env.AWS_ECR_REGISTRY }}
-
-      - name: Build and push to ECR - UNSTABLE
-        run: |
-          docker build -t dyallab/infobae-api -f ./infra/docker/Dockerfile .
-          docker tag dyallab/infobae-api:${{ env.APP_DEV_VERSION }} ${{ env.AWS_ECR_REGISTRY }}/dyallab/infobae-api:${{ env.APP_DEV_VERSION }}
-          docker push ${{ env.AWS_ECR_REGISTRY }}/dyallab/infobae-api:${{ env.APP_DEV_VERSION }}
+          platforms: linux/amd64
 
   production:
     permissions:
@@ -120,13 +102,4 @@ jobs:
           file: infra/docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:${{ env.APP_VERSION }}
-          platforms: linux/amd64,linux/arm64
-
-      - name: Login to AWS ECR
-        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ env.AWS_ECR_REGISTRY }}
-
-      - name: Build and push - PROD
-        run: |
-          docker build -t dyallab/infobae-api -f ./infra/docker/Dockerfile .
-          docker tag dyallab/infobae-api:${{ env.APP_VERSION }} ${{ env.AWS_ECR_REGISTRY }}/dyallab/infobae-api:${{ env.APP_VERSION }}
-          docker push ${{ env.AWS_ECR_REGISTRY }}/dyallab/infobae-api:${{ env.APP_VERSION }}
+          platforms: linux/amd64
