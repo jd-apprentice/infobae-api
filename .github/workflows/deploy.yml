@@ -1,0 +1,71 @@
+name: Deploy to Environment
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        description: Environment name (dev, prod)
+      image_tag:
+        required: true
+        type: string
+        description: Docker image tag to use
+      target_branch:
+        required: true
+        type: string
+        description: Branch to push manifest updates
+      overlay_path:
+        required: true
+        type: string
+        description: Kustomize overlay path (e.g., overlays/dev)
+      commit_message:
+        required: true
+        type: string
+        description: Commit message for manifest update
+
+env:
+  APP_NAME: infobae_api
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@327cd5a69de6c009b9ce71bce8395f28e651bf99
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f7ce87c1d6bead3e36075b2ce75da1f6cc28aaca
+
+      - name: Build and push to Docker Hub
+        uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991
+        with:
+          context: .
+          file: infra/docker/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:${{ inputs.image_tag }}
+          platforms: linux/amd64
+
+      - name: Setup Kustomize
+        uses: ./.github/workflows/kustomize-setup.yml
+
+      - name: Update Kubernetes manifest
+        run: |
+          cd infra/kubernetes/${{ inputs.overlay_path }}
+          kustomize edit set image dyallo/infobae_api=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:${{ inputs.image_tag }}
+
+      - name: Commit and push manifest update
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git add infra/kubernetes/${{ inputs.overlay_path }}/kustomization.yaml
+          git commit -m "${{ inputs.commit_message }}"
+          git push origin HEAD:refs/heads/${{ inputs.target_branch }}
