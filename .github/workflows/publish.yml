@@ -17,7 +17,7 @@ jobs:
     with:
       environment: dev
       image_tag: dev-${{ github.sha }}
-      target_branch: develop
+      target_branch: master
       overlay_path: overlays/dev
       app_name: infobae_api
       dockerfile_path: infra/docker/Dockerfile
