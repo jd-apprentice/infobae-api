@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         io.kompose.service: infobae-api
+        environment: prod
     spec:
       containers:
         - image: dyallo/infobae_api:v1.14.3
