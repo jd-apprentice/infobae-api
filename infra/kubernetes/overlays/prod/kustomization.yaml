@@ -4,20 +4,21 @@ kind: Kustomization
 namespace: infobae-api
 
 resources:
-  - ../../base
+- ../../base
 
 commonLabels:
   environment: prod
 
 replicas:
-  - name: infobae-api
-    count: 2
+- count: 2
+  name: infobae-api
 
 images:
-  - name: dyallo/infobae_api
-    newTag: v1.14.0
+- name: dyallo/infobae_api
+  newName: dyallo/infobae_api
+  newTag: master
 
 patches:
-  - path: service-patch.yaml
-    target:
-      kind: Service
+- path: service-patch.yaml
+  target:
+    kind: Service
