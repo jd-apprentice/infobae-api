@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: infobae-api-dev
 
 resources:
-  - ../../base
+- ../../base
 
 namePrefix: dev-
 
@@ -12,9 +12,9 @@ commonLabels:
   environment: dev
 
 replicas:
-  - name: infobae-api
-    count: 1
+- count: 1
+  name: infobae-api
 
 images:
-  - name: dyallo/infobae_api
-    newTag: dev-placeholder
+- name: dyallo/infobae_api
+  newTag: dev-c266b7379d7b9430491947b06b558a59e379b024
