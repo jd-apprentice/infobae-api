@@ -14,8 +14,6 @@ replicas:
   name: infobae-api
 
 images:
-- name: /infobae_api
-  newTag: master
 - name: dyallo/infobae_api
   newTag: master
 
