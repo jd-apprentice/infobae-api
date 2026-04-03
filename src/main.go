@@ -45,5 +45,6 @@ func main() {
 		panic(err)
 	}
 
+	log.Printf("DEPLOY LALA")
 	log.Printf("Server running on port %s", port)
 }
