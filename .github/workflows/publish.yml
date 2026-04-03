@@ -27,7 +27,7 @@ jobs:
   develop:
     needs: test
     if: ${{ github.ref_name != 'master' && !startsWith(github.ref_name, 'v') }}
-    uses: jd-workflows/.github/workflows/deploy.yml@main
+    uses: jd-apprentice/jd-workflows/.github/workflows/deploy.yml@main
     with:
       environment: dev
       image_tag: dev-${{ github.sha }}
@@ -41,7 +41,7 @@ jobs:
   production:
     needs: test
     if: (github.ref_name == 'master' || startsWith(github.ref_name, 'v')) && github.event_name != 'pull_request'
-    uses: jd-workflows/.github/workflows/deploy.yml@main
+    uses: jd-apprentice/jd-workflows/.github/workflows/deploy.yml@main
     with:
       environment: prod
       image_tag: ${{ github.ref_name }}
