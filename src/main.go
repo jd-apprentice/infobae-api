@@ -45,5 +45,5 @@ func main() {
 		panic(err)
 	}
 
-	log.Printf("Server running on port %s", port)
+	log.Printf("Server is running on port %s", port)
 }
