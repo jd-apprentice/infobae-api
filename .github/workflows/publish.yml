@@ -10,18 +10,34 @@ jobs:
   test:
     uses: ./.github/workflows/checkout-setup.yml
 
+  develop:
+    needs: test
+    if: github.ref_name == 'master'
+    uses: jd-apprentice/jd-workflows/.github/workflows/deploy.yml@main
+    with:
+      environment: dev
+      image_tag: dev-${{ github.sha }}
+      target_branch: develop
+      overlay_path: overlays/dev
+      app_name: infobae_api
+      dockerfile_path: infra/docker/Dockerfile
+      commit_message: "chore: update dev image to dev-${{ github.sha }}"
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
   production:
     needs: test
-    if: (github.ref_name == 'master' || startsWith(github.ref_name, 'v')) && github.event_name != 'pull_request'
+    if: startsWith(github.ref_name, 'v')
     uses: jd-apprentice/jd-workflows/.github/workflows/deploy.yml@main
     with:
       environment: prod
-      image_tag: ${{ github.sha }}
+      image_tag: ${{ github.ref_name }}
       target_branch: master
       overlay_path: overlays/prod
       app_name: infobae_api
       dockerfile_path: infra/docker/Dockerfile
-      commit_message: "chore: update image tag to ${{ github.sha }}"
+      commit_message: "chore: update image tag to ${{ github.ref_name }}"
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
