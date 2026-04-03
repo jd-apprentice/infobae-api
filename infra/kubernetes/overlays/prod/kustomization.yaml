@@ -15,7 +15,7 @@ replicas:
 
 images:
 - name: dyallo/infobae_api
-  newName: /infobae_api
+  newName: infobae_api
   newTag: master
 
 patches:
