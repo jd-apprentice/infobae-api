@@ -15,7 +15,7 @@ replicas:
 
 images:
 - name: dyallo/infobae_api
-  newTag: 47e680921792a89a8a2ada41fa136d093c7a4600
+  newTag: c5f6e8203c58360424b15ed451471bd139a6c11f
 
 patches:
 - path: service-patch.yaml
