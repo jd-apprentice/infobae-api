@@ -17,4 +17,4 @@ replicas:
 
 images:
 - name: dyallo/infobae_api
-  newTag: dev-c266b7379d7b9430491947b06b558a59e379b024
+  newTag: dev-34d9f06b371cd48c87d8e355856e2af985a929b3
